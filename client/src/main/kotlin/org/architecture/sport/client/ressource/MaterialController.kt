@@ -13,18 +13,10 @@ class MaterialController {
     }
 
 
-    fun deleteMaterial() {
-        TODO()
-    }
-
-
     fun getMaterial() {
         TODO()
     }
 
-    fun getMaterials() {
-        TODO()
-    }
 
     fun distributeMaterial() {
         TODO()

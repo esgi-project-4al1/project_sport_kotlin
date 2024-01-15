@@ -5,7 +5,7 @@ import arrow.core.Option
 import org.architecture.sport.domain.error.ApplicationError
 
 interface PersistenceSpi<T, ID> {
-    fun save(o: T): Either<ApplicationError?, T>
+    fun save(o: T): Either<ApplicationError, T>
 
     fun findById(id: ID): T?
 }
