@@ -6,6 +6,7 @@ import org.architecture.sport.domain.error.ApplicationError
 import org.architecture.sport.domain.model.Material
 import org.architecture.sport.domain.ports.client.MaterialApi
 import org.architecture.sport.domain.ports.server.MaterialPersistenceSpi
+import org.architecture.sport.domain.utils.toList
 import org.architecture.sport.domain.validation.MaterialValidation
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -32,7 +33,7 @@ class MaterialService(
 
     override fun getMaterial(id: UUID?): List<Material> {
         return if (id != null) {
-            materialPersistenceSpi.findById(id)?.let { listOf(it) } ?: emptyList()
+            materialPersistenceSpi.findById(id).toList()
         } else {
             materialPersistenceSpi.findAll()
         }
@@ -50,10 +51,10 @@ class MaterialService(
             value = id
         ).left()
         val newMaterial = material.listMaintenanceTime.plus(LocalDateTime.now())
-        try {
-            materialValidation.validateMaterial(material.copy(listMaintenanceTime = newMaterial))
+        return try {
+            materialPersistenceSpi.save(material.copy(listMaintenanceTime = newMaterial))
         } catch (e: Exception) {
-            return ApplicationError(
+            ApplicationError(
                 context = "Material",
                 message = "Material is not save after maintenance",
                 value = material

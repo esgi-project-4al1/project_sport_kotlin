@@ -21,4 +21,6 @@ interface SessionApi {
 
 
     fun getSessionsByCenterSport(centerSportId: UUID): List<Session>
+
+    fun returnCaution(sessionId: UUID, userId: UUID): Either<ApplicationError, Session>
 }

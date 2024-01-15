@@ -14,7 +14,8 @@ interface MaterialPersistenceSpi : PersistenceSpi<Material, UUID> {
     fun findAll(): List<Material>
 
 
-    fun maintenanceMaterial(
-        id: UUID
-    ): Material
+    fun isGoodCenterSport(
+        centerSportId: UUID,
+        materielId: UUID
+    ): Boolean
 }

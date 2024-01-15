@@ -6,6 +6,7 @@ import org.architecture.sport.domain.error.ApplicationError
 import org.architecture.sport.domain.model.CenterSport
 import org.architecture.sport.domain.ports.client.CenterSportApi
 import org.architecture.sport.domain.ports.server.CenterSportPersistenceSpi
+import org.architecture.sport.domain.utils.toList
 import org.architecture.sport.domain.validation.CenterSportValidation
 import org.springframework.stereotype.Service
 import java.util.*
@@ -30,7 +31,7 @@ class CenterSportService(
 
     override fun gets(id: UUID?): List<CenterSport> {
         return if (id != null) {
-            centerSportPersistenceSpi.findById(id)?.let { listOf(it) } ?: emptyList()
+            centerSportPersistenceSpi.findById(id).toList()
         } else {
             centerSportPersistenceSpi.findAll()
         }

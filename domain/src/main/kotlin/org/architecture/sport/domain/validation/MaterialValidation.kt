@@ -22,7 +22,7 @@ class MaterialValidation {
                 minimum(1)
                 maximum(1000)
             }
-            Material::price required {
+            Material::caution required {
                 minimum(1.0)
                 maximum(1000.0)
             }

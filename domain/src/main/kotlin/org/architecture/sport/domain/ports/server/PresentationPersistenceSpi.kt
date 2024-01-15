@@ -15,6 +15,7 @@ interface PresentationPersistenceSpi : PersistenceSpi<Prestation, UUID> {
     fun getPresentation(presentationId: UUID): Prestation?
 
     fun getPresentations(): List<Prestation>
+    fun isGoodCenterSport(centerSportId: UUID, presentationId: UUID): Boolean
 
 
 }

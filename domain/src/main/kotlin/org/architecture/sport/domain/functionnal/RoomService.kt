@@ -7,6 +7,7 @@ import org.architecture.sport.domain.error.ApplicationError
 import org.architecture.sport.domain.model.Room
 import org.architecture.sport.domain.ports.client.RoomApi
 import org.architecture.sport.domain.ports.server.RoomPersistenceSpi
+import org.architecture.sport.domain.utils.toList
 import org.architecture.sport.domain.validation.RoomValidation
 import org.springframework.stereotype.Service
 import java.util.*
@@ -39,7 +40,7 @@ class RoomService(
 
     override fun getRoom(id: UUID?): List<Room> {
         return if (id != null) {
-            listOfNotNull(roomPersistenceSpi.getRoom(id))
+            roomPersistenceSpi.getRoom(id).toList()
         } else {
             roomPersistenceSpi.getRooms()
         }
@@ -60,7 +61,7 @@ class RoomService(
         } catch (e: Exception) {
             ApplicationError(
                 context = "RoomService.updatePrice",
-                message = "Error when updating price",
+                message = "Error when updating caution",
                 value = id
             ).left()
         }

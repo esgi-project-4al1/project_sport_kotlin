@@ -17,11 +17,6 @@ class SessionController {
         TODO()
     }
 
-    @DeleteMapping
-    fun deleteSession(
-    ) {
-        TODO()
-    }
 
     @GetMapping
     fun getSession(

@@ -6,6 +6,7 @@ import org.architecture.sport.domain.error.ApplicationError
 import org.architecture.sport.domain.model.Prestation
 import org.architecture.sport.domain.ports.client.PresentationApi
 import org.architecture.sport.domain.ports.server.PresentationPersistenceSpi
+import org.architecture.sport.domain.utils.toList
 import org.architecture.sport.domain.validation.PresentationValidation
 import org.springframework.stereotype.Service
 import java.util.*
@@ -33,7 +34,7 @@ class PresentationService(
 
     override fun getPresentation(presentationId: UUID?): List<Prestation> {
         return if (presentationId != null) {
-            listOf(presentationPersistenceSpi.getPresentation(presentationId)!!)
+            presentationPersistenceSpi.getPresentation(presentationId).toList()
         } else {
             presentationPersistenceSpi.getPresentations()
         }

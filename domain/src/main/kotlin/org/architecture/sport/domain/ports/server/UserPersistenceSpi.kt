@@ -13,4 +13,6 @@ interface UserPersistenceSpi: PersistenceSpi<User, UUID> {
 
 
      override fun findById(id: UUID): User?
+
+
 }

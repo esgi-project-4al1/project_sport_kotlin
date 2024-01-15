@@ -11,7 +11,7 @@ class PresentationValidation {
 
 
     fun validatePresentation(presentation: Prestation): ValidationResult<Prestation>{
-        val validation = Validation<Prestation> {
+        val validation = Validation {
             Prestation::name required {
                 pattern("^[a-zA-Z]+\$")
                 minLength(2)
