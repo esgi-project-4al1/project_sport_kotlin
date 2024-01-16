@@ -9,10 +9,7 @@ import org.architecture.sport.domain.model.Session
 import org.architecture.sport.domain.model.TransactionStatus
 import org.architecture.sport.domain.model.User
 import org.architecture.sport.domain.ports.client.SessionApi
-import org.architecture.sport.domain.ports.server.MaterialPersistenceSpi
-import org.architecture.sport.domain.ports.server.PresentationPersistenceSpi
-import org.architecture.sport.domain.ports.server.SessionPersistenceSpi
-import org.architecture.sport.domain.ports.server.UserPersistenceSpi
+import org.architecture.sport.domain.ports.server.*
 import org.architecture.sport.domain.utils.toList
 import org.architecture.sport.domain.validation.SessionValidation
 import org.springframework.stereotype.Service
@@ -26,6 +23,7 @@ class SessionService(
     private val presentationPersistenceSpi: PresentationPersistenceSpi,
     private val sessionPersistenceSpi: SessionPersistenceSpi,
     private val userPersistenceSpi: UserPersistenceSpi,
+    private val enterprisePersistenceSpi: EnterprisePersistenceSpi
 ) : SessionApi {
     override fun createSession(session: Session): Either<ApplicationError, Session> {
         val validation = sessionValidation.validateSession(session)
@@ -65,14 +63,8 @@ class SessionService(
             message = "User not found",
             value = userId
         ).left()
-        val materialCaution= session.material?.let { materialPersistenceSpi.findById(it)?.caution } ?: 0.0
-        isHasMoney(session, user, materialCaution).run {
-            if (!this) return ApplicationError(
-                context = "Session",
-                message = "User has not enough money",
-                value = userId
-            ).left()
-        }
+        val materialCaution = session.material?.let { materialPersistenceSpi.findById(it)?.caution } ?: 0.0
+
 
         if (session.participants.any { it.first == user.id }) return ApplicationError(
             context = "Session",
@@ -80,23 +72,21 @@ class SessionService(
             value = userId
         ).left()
 
-        userPersistenceSpi.save(user.copy(money = user.money  - (session.price + materialCaution))).fold(
+        userPersistenceSpi.save(user.copy(money = user.money - (session.price + materialCaution))).fold(
             { return it.left() },
             { }
         )
 
+        val isEnterprise = isUserInEnterprise(session, user)
 
-        return sessionValidation.validationAddParticipant(session).fold(
-            { it.left() },
-            {
-                val sessionUpdate = session.addParticipant(user.id)
-                sessionPersistenceSpi.save(
-                    sessionUpdate.createNewHistory(
-                        comment = "User ${user.id} join session ${session.id}"
-                    )
-                )
-            }
-        )
+        if (!isHasMoney(session, user, materialCaution, isEnterprise)) return ApplicationError(
+            context = "Session",
+            message = "User has not enough money",
+            value = userId
+        ).left()
+
+
+        return payment(session, user, materialCaution, isEnterprise)
     }
 
     override fun unJoinSession(sessionId: UUID, userId: UUID): Either<ApplicationError, Session> {
@@ -139,8 +129,8 @@ class SessionService(
             message = "User not found in session",
             value = userId
         ).left()
-        val materialCaution= session.material?.let { materialPersistenceSpi.findById(it)?.caution } ?: 0.0
-        return userPersistenceSpi.save(user.copy(money = user.money  + materialCaution)).fold(
+        val materialCaution = session.material?.let { materialPersistenceSpi.findById(it)?.caution } ?: 0.0
+        return userPersistenceSpi.save(user.copy(money = user.money + materialCaution)).fold(
             { it.left() },
             {
                 val sessionUpdate = session.rentMaterial(user.id)
@@ -175,6 +165,62 @@ class SessionService(
         return materielIsAvailable(session) && prestationIsAvailable(session)
     }
 
+    private fun isHasMoney(session: Session, user: User, priceCaution: Double, isEnterprise: Boolean): Boolean {
+        return if (isEnterprise) {
+            isHasMoneyEnterprise(session, user, priceCaution)
+        } else {
+            isHasMoneyNotEnterprise(session, user, priceCaution)
+        }
+    }
+
+    private fun isUserInEnterprise(session: Session, user: User): Boolean {
+        return enterprisePersistenceSpi.isUserIsInEnterprise(session.centerSportId, user.id)
+    }
+
+
+    private fun payment(
+        session: Session,
+        user: User,
+        priceCaution: Double,
+        isEnterprise: Boolean
+    ): Either<ApplicationError, Session> {
+        return if (isEnterprise) {
+            userPersistenceSpi.save(user.copy(money = user.money - (session.price * PERCENTAGE_FOR_ENTERPRISE + priceCaution)))
+                .fold(
+                    { it.left() },
+                    {
+                        val sessionUpdate = session.addParticipant(user.id)
+                        sessionPersistenceSpi.save(
+                            sessionUpdate.createNewHistory(
+                                comment = "User ${user.id} join session ${session.id}"
+                            )
+                        )
+                    }
+                )
+        } else {
+            userPersistenceSpi.save(user.copy(money = user.money - (session.price + priceCaution))).fold(
+                { it.left() },
+                {
+                    val sessionUpdate = session.addParticipant(user.id)
+                    sessionPersistenceSpi.save(
+                        sessionUpdate.createNewHistory(
+                            comment = "User ${user.id} join session ${session.id}"
+                        )
+                    )
+                }
+            )
+        }
+    }
+
+
+    private fun isHasMoneyNotEnterprise(session: Session, user: User, priceCaution: Double): Boolean {
+        return user.money >= session.price + priceCaution
+    }
+
+    private fun isHasMoneyEnterprise(session: Session, user: User, priceCaution: Double): Boolean {
+        return user.money >= session.price * PERCENTAGE_FOR_ENTERPRISE + priceCaution
+    }
+
 
     private fun Session.removeParticipant(userId: UUID): Session {
         return this.copy(participants = this.participants.filter { it.first != userId })
@@ -198,9 +244,9 @@ class SessionService(
         val removeParticipant = this.removeParticipant(userId)
         return this.copy(participants = removeParticipant.participants + (userId to TransactionStatus.CAUTION_RETURNED))
     }
-    private fun isHasMoney(session: Session, user: User, priceCaution: Double): Boolean {
-        return user.money >= session.price + priceCaution
-    }
 
+    companion object {
+        private const val PERCENTAGE_FOR_ENTERPRISE = 0.2
+    }
 
 }
