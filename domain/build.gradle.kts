@@ -32,7 +32,8 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.25.1")
     // https://mvnrepository.com/artifact/org.mockito.kotlin/mockito-kotlin
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
-
+    // https://mvnrepository.com/artifact/io.github.serpro69/kotlin-faker
+    implementation("io.github.serpro69:kotlin-faker:1.15.0")
 }
 
 tasks.withType<KotlinCompile> {

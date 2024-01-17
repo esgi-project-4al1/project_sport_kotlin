@@ -41,6 +41,6 @@ class UserService(
             message = "User is not found",
             value = userMoney
         ).left()
-        return userPersistenceSpi.save(user.copy(money = userMoney.money))
+        return userPersistenceSpi.save(user.copy(money = userMoney.money+ user.money))
     }
 }

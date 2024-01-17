@@ -19,27 +19,25 @@ class CenterSportValidation {
         val validationResult = Validation<CenterSport> {
             CenterSport::address required {
                 Address::street required {
-                    pattern("^[a-zA-Z0-9 ]+\$")
                     minLength(2)
                     maxLength(100)
                 }
                 Address::city required {
-                    pattern("^[a-zA-Z]+\$")
                     minLength(2)
                     maxLength(100)
                 }
                 Address::postalCode required {
-                    pattern("^[0-9]{5}\$")
-                }
-
-                Address::country required {
-                    pattern("^[a-zA-Z]+\$")
                     minLength(2)
                     maxLength(100)
                 }
+
+                Address::country required {
+                    minLength(2)
+                    maxLength(100)
+                }
+
             }
             CenterSport::name required {
-                pattern("^[a-zA-Z]+\$")
                 minLength(2)
                 maxLength(100)
             }

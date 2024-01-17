@@ -43,7 +43,7 @@ class EnterpriseService(
         val enterprise = enterprisePersistenceSpi.get(enterpriseID)
         val user = userPersistenceSpi.findById(userId)
         if (enterprise != null && user != null) {
-            if (enterprisePersistenceSpi.isUserAlreadyInEnterprise(enterpriseID, userId)) {
+            if (enterprisePersistenceSpi.isUserAlreadyInEnterprise(userId)) {
                 return ApplicationError(
                     context = "Enterprise",
                     message = "User already in enterprise",

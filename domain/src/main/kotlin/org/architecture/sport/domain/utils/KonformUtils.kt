@@ -4,25 +4,18 @@ import io.konform.validation.ValidationBuilder
 import java.time.Duration
 import java.time.LocalDateTime
 
-
-
-fun ValidationBuilder<LocalDateTime>.openHourStart(hour: Int): io.konform.validation.Constraint<LocalDateTime> {
-    return addConstraint("openHour start '{0}'", hour.toString()) {
-        it.isAfter(
-            it.withHour(hour).withMinute(0).withSecond(0)
+fun ValidationBuilder<LocalDateTime>.openHour(
+    startHour: Int,
+    endHour: Int
+): io.konform.validation.Constraint<LocalDateTime> {
+    return addConstraint("interval time open {startHour} to {endHour}", startHour.toString(), endHour.toString()) {
+        it.isBefore(
+            it.withHour(endHour).withMinute(0).withSecond(0)
+        ) && it.isAfter(
+            it.withHour(startHour).withMinute(0).withSecond(0)
         )
     }
 }
-
-
-fun ValidationBuilder<LocalDateTime>.openHourEnd(hour: Int): io.konform.validation.Constraint<LocalDateTime> {
-    return addConstraint("openHour end '{0}'", hour.toString()) {
-        it.isAfter(
-            it.withHour(hour).withMinute(0).withSecond(0)
-        )
-    }
-}
-
 
 fun ValidationBuilder<LocalDateTime>.notBeforeNow(): io.konform.validation.Constraint<LocalDateTime> {
     return addConstraint("not before now") {
@@ -40,5 +33,5 @@ fun ValidationBuilder<LocalDateTime>.intervalTime(localDateTime: LocalDateTime):
 
 fun intervalBetweenTwoDate(localDateTime: LocalDateTime, localDateTime1: LocalDateTime): Boolean {
     val interval = Duration.between(localDateTime, localDateTime1)
-    return  interval.abs().toHours() >= 1
+    return interval.abs().toHours() >= 1
 }

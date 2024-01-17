@@ -11,7 +11,7 @@ interface EnterprisePersistenceSpi : PersistenceSpi<Enterprise, UUID> {
 
     fun removeUsers(enterpriseId: UUID, userId: UUID): Either<ApplicationError, Enterprise>
 
-    fun isUserAlreadyInEnterprise(enterpriseId: UUID, userId: UUID): Boolean
+    fun isUserAlreadyInEnterprise(userId: UUID): Boolean
 
     fun isUserIsInEnterprise(enterpriseId: UUID, userId: UUID): Boolean
 

@@ -5,6 +5,7 @@ import arrow.core.left
 import org.architecture.sport.domain.error.ApplicationError
 import org.architecture.sport.domain.model.Material
 import org.architecture.sport.domain.ports.client.MaterialApi
+import org.architecture.sport.domain.ports.server.CenterSportPersistenceSpi
 import org.architecture.sport.domain.ports.server.MaterialPersistenceSpi
 import org.architecture.sport.domain.utils.toList
 import org.architecture.sport.domain.validation.MaterialValidation
@@ -16,7 +17,7 @@ import java.util.*
 class MaterialService(
     private val materialValidation: MaterialValidation,
     private val materialPersistenceSpi: MaterialPersistenceSpi,
-    private val centerSportService: CenterSportService,
+    private val centerSportPersistenceSpi: CenterSportPersistenceSpi,
 ) : MaterialApi {
 
     override fun createMaterial(material: Material): Either<ApplicationError, Material> {
@@ -76,7 +77,7 @@ class MaterialService(
             message = "Material not found",
             value = materialId
         ).left()
-        val centerSport = centerSportService.gets(centerSportId).firstOrNull()
+        val centerSport = centerSportPersistenceSpi.findById(centerSportId)
             ?: return ApplicationError(
                 context = "CenterSport",
                 message = "CenterSport not found",

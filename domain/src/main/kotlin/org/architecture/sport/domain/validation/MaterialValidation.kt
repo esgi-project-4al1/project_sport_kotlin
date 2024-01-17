@@ -14,7 +14,6 @@ class MaterialValidation {
     ): ValidationResult<Material> {
         val validation = Validation<Material> {
             Material::name required {
-                pattern("^[a-zA-Z0-9]+\$")
                 minLength(2)
                 maxLength(100)
             }
