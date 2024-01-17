@@ -5,10 +5,7 @@ import org.architecture.sport.client.mapping.RoomMapper
 import org.architecture.sport.client.utils.tryCatchUUID
 import org.architecture.sport.domain.ports.client.RoomApi
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -20,7 +17,7 @@ class RoomResource(
 
     @PostMapping
     fun createRoom(
-        roomDto: RoomDto
+        @RequestBody(required = true)  roomDto: RoomDto
     ): ResponseEntity<Any> {
         roomMapper.toDomain(roomDto).let {
             return roomApi.createRoom(
@@ -39,7 +36,7 @@ class RoomResource(
 
     @GetMapping
     fun getRoom(
-        roomId: String?
+        @RequestBody(required = false)  roomId: String?
     ): ResponseEntity<Any> {
         if (roomId != null && tryCatchUUID(roomId) == null) {
             ResponseEntity.badRequest().body("Invalid UUID")
@@ -50,9 +47,9 @@ class RoomResource(
         return ResponseEntity.ok(room)
     }
 
-    @GetMapping
+    @GetMapping("/by-center-sport")
     fun getRoomByCenterSport(
-        centerSportId: String,
+        @RequestBody(required = true)  centerSportId: String,
     ): ResponseEntity<Any> {
         if (tryCatchUUID(centerSportId) == null) {
             ResponseEntity.badRequest().body("Invalid UUID")
@@ -63,10 +60,10 @@ class RoomResource(
         return ResponseEntity.ok(room)
     }
 
-    @PostMapping
+    @PostMapping("/update-price")
     fun updatePrice(
-        roomId: String,
-        price: Double
+        @RequestBody(required = true)  roomId: String,
+        @RequestBody(required = true)  price: Double
     ): ResponseEntity<Any> {
         if (tryCatchUUID(roomId) == null) {
             ResponseEntity.badRequest().body("Invalid UUID")

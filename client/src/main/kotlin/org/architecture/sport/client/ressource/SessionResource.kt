@@ -5,15 +5,12 @@ import org.architecture.sport.client.mapping.SessionMapper
 import org.architecture.sport.client.utils.tryCatchUUID
 import org.architecture.sport.domain.ports.client.SessionApi
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
 @RequestMapping("/session")
-class SessionController(
+class SessionResource(
     private val sessionApi: SessionApi,
     private val sessionMapper: SessionMapper
 ) {
@@ -21,7 +18,7 @@ class SessionController(
 
     @PostMapping
     fun createSession(
-        sessionDto: SessionDto,
+        @RequestBody(required = true)  sessionDto: SessionDto,
     ): ResponseEntity<Any> {
         if (sessionDto.material != null && tryCatchUUID(sessionDto.material) == null) {
             return ResponseEntity.badRequest().body("Invalid UUID for material")
@@ -44,10 +41,12 @@ class SessionController(
         )
     }
 
-    @PostMapping
+    @PostMapping(
+        path = ["/join"],
+    )
     fun joinSession(
-        sessionId: String,
-        userId: String,
+        @RequestBody(required = true)  sessionId: String,
+        @RequestBody(required = true)  userId: String,
     ): ResponseEntity<Any> {
         if (tryCatchUUID(sessionId) == null) {
             return ResponseEntity.badRequest().body("Invalid UUID for sessionId")
@@ -69,10 +68,12 @@ class SessionController(
             )
     }
 
-    @PostMapping
+    @PostMapping(
+        path = ["/unjoin"],
+    )
     fun unJoinSession(
-        sessionId: String,
-        userId: String,
+        @RequestBody(required = true)  sessionId: String,
+        @RequestBody(required = true)  userId: String,
     ): ResponseEntity<Any> {
         if (tryCatchUUID(sessionId) == null) {
             return ResponseEntity.badRequest().body("Invalid UUID for sessionId")
@@ -94,10 +95,12 @@ class SessionController(
             )
     }
 
-    @PostMapping
+    @PostMapping(
+        path = ["/caution"],
+    )
     fun getCaution(
-        sessionId: String,
-        userId: String,
+        @RequestBody(required = true)  sessionId: String,
+        @RequestBody(required = true)  userId: String,
     ): ResponseEntity<Any> {
         if (tryCatchUUID(sessionId) == null) {
             return ResponseEntity.badRequest().body("Invalid UUID for sessionId")
@@ -122,7 +125,7 @@ class SessionController(
 
     @GetMapping
     fun getSession(
-        sessionId: String?,
+        @RequestBody(required = false)  sessionId: String?,
     ): ResponseEntity<Any> {
         if (sessionId != null && tryCatchUUID(sessionId) == null) {
             return ResponseEntity.badRequest().body("Invalid UUID")
@@ -133,9 +136,9 @@ class SessionController(
         return ResponseEntity.ok(session)
     }
 
-    @GetMapping
+    @GetMapping("/by-center-sport")
     fun getSessionsByCenterSport(
-        centerSportId: String,
+        @RequestBody(required = true)  centerSportId: String,
     ): ResponseEntity<Any> {
         if (tryCatchUUID(centerSportId) == null) {
             return ResponseEntity.badRequest().body("Invalid UUID")

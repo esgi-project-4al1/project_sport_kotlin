@@ -4,6 +4,7 @@ import arrow.core.Either
 import org.architecture.sport.domain.model.User
 import org.architecture.sport.domain.error.ApplicationError
 import org.architecture.sport.domain.model.UserMoney
+import java.util.UUID
 
 interface UserApi {
 
@@ -14,5 +15,10 @@ interface UserApi {
 
     fun updateMoney(
         userMoney: UserMoney
+    ): Either<ApplicationError, User>
+
+
+    fun getUser(
+        id: UUID,
     ): Either<ApplicationError, User>
 }

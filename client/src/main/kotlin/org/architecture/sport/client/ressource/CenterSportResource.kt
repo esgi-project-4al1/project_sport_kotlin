@@ -5,10 +5,7 @@ import org.architecture.sport.client.mapping.CenterSportMapper
 import org.architecture.sport.client.utils.tryCatchUUID
 import org.architecture.sport.domain.ports.client.CenterSportApi
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RequestMapping("/center-sport")
@@ -20,7 +17,7 @@ class CenterSportResource(
 
     @PostMapping
     fun createCenterSport(
-        centerSportDto: CenterSportDto,
+        @RequestBody(required = true) centerSportDto: CenterSportDto,
     ): ResponseEntity<Any> {
         return centerSportApi.create(
             centerSport = centerSportMapper.toDomain(centerSportDto)
@@ -36,7 +33,7 @@ class CenterSportResource(
 
     @GetMapping
     fun getCenterSport(
-        centerSportId: String?,
+        @RequestBody(required = false) centerSportId: String?,
     ): ResponseEntity<Any> {
         if (centerSportId != null){
             tryCatchUUID(centerSportId)?.let {

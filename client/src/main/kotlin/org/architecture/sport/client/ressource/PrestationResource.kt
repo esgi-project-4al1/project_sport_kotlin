@@ -5,10 +5,7 @@ import org.architecture.sport.client.mapping.PrestationMapper
 import org.architecture.sport.client.utils.tryCatchUUID
 import org.architecture.sport.domain.ports.client.PresentationApi
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RequestMapping("/prestation")
@@ -20,8 +17,8 @@ class PrestationResource(
 
     @PostMapping
     fun createPrestation(
-        prestationDto: PrestationDto,
-        centerSportId: String,
+        @RequestBody(required = true) prestationDto: PrestationDto,
+        @RequestBody(required = true)  centerSportId: String,
     ): ResponseEntity<Any> {
         if (tryCatchUUID(centerSportId) != null) return ResponseEntity.badRequest().body("Invalid UUID for centerSportId")
         return prestationApi.createPresentation(
@@ -40,7 +37,7 @@ class PrestationResource(
 
     @GetMapping
     fun getPrestation(
-        prestationId: String?,
+        @RequestBody(required = false)  prestationId: String?,
     ): ResponseEntity<Any> {
         if (prestationId != null){
             tryCatchUUID(prestationId)?.let {
@@ -56,7 +53,7 @@ class PrestationResource(
 
     @GetMapping("/by-center-sport")
     fun getPrestationsByCenterSport(
-        centerSportId: String,
+        @RequestBody(required = true)  centerSportId: String,
     ): ResponseEntity<Any> {
         if (tryCatchUUID(centerSportId) != null) return ResponseEntity.badRequest().body("Invalid UUID for centerSportId")
         val prestation =  prestationApi.getPresentationsByCenterSport(
@@ -68,8 +65,8 @@ class PrestationResource(
 
     @PostMapping("/update")
     fun updatePrestation(
-        prestationId: String,
-        newPrice: Double,
+        @RequestBody(required = true)  prestationId: String,
+        @RequestBody(required = true)  newPrice: Double,
     ): ResponseEntity<Any> {
         if (tryCatchUUID(prestationId) != null) return ResponseEntity.badRequest().body("Invalid UUID for prestationId")
         return prestationApi.updatePresentation(

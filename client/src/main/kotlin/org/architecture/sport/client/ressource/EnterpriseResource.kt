@@ -4,10 +4,7 @@ import org.architecture.sport.client.utils.tryCatchUUID
 import org.architecture.sport.domain.model.Enterprise
 import org.architecture.sport.domain.ports.client.EnterpriseApi
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -19,7 +16,7 @@ class EnterpriseResource(
 
     @PostMapping
     fun create(
-        name: String,
+        @RequestBody(required = true) name: String,
     ): ResponseEntity<Any> {
         return enterpriseApi.create(
             Enterprise(
@@ -37,7 +34,7 @@ class EnterpriseResource(
 
     @GetMapping
     fun get(
-        id: String?,
+        @RequestBody(required = false) id: String?,
     ): ResponseEntity<Any> {
         if (id != null) {
             tryCatchUUID(id)?.let {
@@ -53,8 +50,8 @@ class EnterpriseResource(
 
     @PostMapping("/add-users")
     fun addUsers(
-        enterpriseID: String,
-        userId: String,
+        @RequestBody(required = true) enterpriseID: String,
+        @RequestBody(required = true) userId: String,
     ): ResponseEntity<Any> {
         if (tryCatchUUID(enterpriseID) != null) return ResponseEntity.badRequest().body("Invalid UUID")
         if (tryCatchUUID(userId) != null) return ResponseEntity.badRequest().body("Invalid UUID")
@@ -76,8 +73,8 @@ class EnterpriseResource(
 
     @PostMapping("/remove-users")
     fun removeUsers(
-        enterpriseID: String,
-        userId: String,
+        @RequestBody(required = true) enterpriseID: String,
+        @RequestBody(required = true) userId: String,
     ): ResponseEntity<Any> {
         if (tryCatchUUID(enterpriseID) != null) return ResponseEntity.badRequest().body("Invalid UUID")
         if (tryCatchUUID(userId) != null) return ResponseEntity.badRequest().body("Invalid UUID")

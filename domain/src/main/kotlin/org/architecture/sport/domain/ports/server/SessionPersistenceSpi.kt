@@ -6,19 +6,12 @@ import java.util.*
 
 interface SessionPersistenceSpi: PersistenceSpi<Session, UUID> {
 
-    fun createSession(session: Session): Session
 
     fun getSession(sessionId: UUID?): Session?
 
     fun getSessions(): List<Session>
 
-    fun joinSession(sessionId: UUID, userId: UUID): Session
-
-    fun unJoinSession(sessionId: UUID, userId: UUID): Session
-
-
     fun getSessionsByCenterSport(centerSportId: UUID): List<Session>
-
 
     fun isMaterielAvailableNotInOverSession(startDateTime: LocalDateTime, endDateTime: LocalDateTime, materielId: UUID): Boolean
 

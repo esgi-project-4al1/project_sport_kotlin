@@ -2,7 +2,6 @@ package org.architecture.sport.domain.functionnal
 
 import arrow.core.Either
 import arrow.core.left
-import arrow.core.right
 import org.architecture.sport.domain.error.ApplicationError
 import org.architecture.sport.domain.model.Room
 import org.architecture.sport.domain.ports.client.RoomApi
@@ -21,7 +20,7 @@ class RoomService(
         val validation = roomValidation.validateRoom(room)
         return if (validation.errors.isEmpty()) {
             try {
-                roomPersistenceSpi.createRoom(room.copy(centerSportId = centerSportId)).right()
+                roomPersistenceSpi.createRoom(room.copy(centerSportId = centerSportId))
             } catch (e: Exception) {
                 ApplicationError(
                     context = "RoomService.createRoom",

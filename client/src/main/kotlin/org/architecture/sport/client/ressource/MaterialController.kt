@@ -5,10 +5,7 @@ import org.architecture.sport.client.mapping.MaterialMapper
 import org.architecture.sport.client.utils.tryCatchUUID
 import org.architecture.sport.domain.ports.client.MaterialApi
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -21,7 +18,7 @@ class MaterialController(
 
     @PostMapping
     fun createMaterial(
-        createMaterielDto: CreateMaterielDto,
+        @RequestBody(required = true) createMaterielDto: CreateMaterielDto,
     ): ResponseEntity<Any> {
         materialMapper.createMaterialToDomain(createMaterielDto).let {
             return materialApi.createMaterial(
@@ -42,7 +39,7 @@ class MaterialController(
         params = ["materialId"]
     )
     fun getMaterial(
-        materialId: String?,
+        @RequestBody(required = false) materialId: String?,
     ): ResponseEntity<Any> {
         if (materialId != null) {
             tryCatchUUID(materialId)?.let {
@@ -56,10 +53,10 @@ class MaterialController(
     }
 
 
-    @PostMapping
+    @PostMapping("/distribute")
     fun distributeMaterial(
-        materialId: String?,
-        centerSportId: String?,
+        @RequestBody(required = false) materialId: String?,
+        @RequestBody(required = false) centerSportId: String?,
     ): ResponseEntity<Any>  {
         if (materialId != null) {
             tryCatchUUID(materialId)?.let {
@@ -85,9 +82,9 @@ class MaterialController(
         )
     }
 
-    @PostMapping
+    @PostMapping("/maintenance")
     fun maintenanceMaterial(
-        materialId: String?,
+        @RequestBody(required = false) materialId: String?,
     ): ResponseEntity<Any>  {
         if (materialId != null) {
             tryCatchUUID(materialId)?.let {

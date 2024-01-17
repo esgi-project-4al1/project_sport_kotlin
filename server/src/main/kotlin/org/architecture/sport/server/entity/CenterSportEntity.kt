@@ -5,14 +5,10 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
 
-@Document(collection = "users")
-data class UserEntity(
+@Document(collection = "centers")
+data class CenterSportEntity(
     @Id
     val id: UUID,
-    val firstName: String,
-    val lastName: String,
-    val email: String,
+    val name: String,
     val address: Address,
-    val phoneNumber: String,
-    val money: Double,
 )

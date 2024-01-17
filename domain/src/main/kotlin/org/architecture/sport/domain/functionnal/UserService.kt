@@ -2,6 +2,7 @@ package org.architecture.sport.domain.functionnal
 
 import arrow.core.Either
 import arrow.core.left
+import arrow.core.right
 import org.architecture.sport.domain.error.ApplicationError
 import org.architecture.sport.domain.model.User
 import org.architecture.sport.domain.model.UserMoney
@@ -9,6 +10,7 @@ import org.architecture.sport.domain.ports.client.UserApi
 import org.architecture.sport.domain.ports.server.UserPersistenceSpi
 import org.architecture.sport.domain.validation.UserValidation
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @Service
 class UserService(
@@ -42,5 +44,14 @@ class UserService(
             value = userMoney
         ).left()
         return userPersistenceSpi.save(user.copy(money = userMoney.money+ user.money))
+    }
+
+    override fun getUser(id: UUID): Either<ApplicationError, User> {
+        val user = userPersistenceSpi.findById(id) ?: return ApplicationError(
+            context = "User",
+            message = "User is not found",
+            value = id
+        ).left()
+        return user.right()
     }
 }
