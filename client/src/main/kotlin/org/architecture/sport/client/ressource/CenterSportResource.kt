@@ -1,21 +1,51 @@
 package org.architecture.sport.client.ressource
 
+import org.architecture.sport.client.dto.CenterSportDto
+import org.architecture.sport.client.mapping.CenterSportMapper
+import org.architecture.sport.client.utils.tryCatchUUID
+import org.architecture.sport.domain.ports.client.CenterSportApi
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 
 @RequestMapping("/center-sport")
 @RestController
-class CenterSportResource {
+class CenterSportResource(
+    private val centerSportApi: CenterSportApi,
+    private val centerSportMapper: CenterSportMapper
+) {
 
     @PostMapping
-    fun createCenterSport() {
-        TODO()
+    fun createCenterSport(
+        centerSportDto: CenterSportDto,
+    ): ResponseEntity<Any> {
+        return centerSportApi.create(
+            centerSport = centerSportMapper.toDomain(centerSportDto)
+        ).fold(
+            { error ->
+                ResponseEntity.badRequest().body(error.message)
+            },
+            { centerSport ->
+                ResponseEntity.ok(centerSport)
+            }
+        )
     }
 
     @GetMapping
-    fun getCenterSport() {
-        TODO()
+    fun getCenterSport(
+        centerSportId: String?,
+    ): ResponseEntity<Any> {
+        if (centerSportId != null){
+            tryCatchUUID(centerSportId)?.let {
+                return ResponseEntity.badRequest().body("Invalid UUID")
+            }
+        }
+        val centerSport =  centerSportApi.gets(
+            id = UUID.fromString(centerSportId)
+        )
+        return ResponseEntity.ok(centerSport)
     }
 }
