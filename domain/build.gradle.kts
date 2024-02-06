@@ -24,6 +24,16 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("io.konform:konform:0.4.0")
     implementation("io.arrow-kt:arrow-core:1.2.1")
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testImplementation("org.mockito:mockito-core:5.9.0")
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
+    // https://mvnrepository.com/artifact/org.assertj/assertj-core
+    testImplementation("org.assertj:assertj-core:3.25.1")
+    // https://mvnrepository.com/artifact/org.mockito.kotlin/mockito-kotlin
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    // https://mvnrepository.com/artifact/io.github.serpro69/kotlin-faker
+    implementation("io.github.serpro69:kotlin-faker:1.15.0")
 }
 
 tasks.withType<KotlinCompile> {

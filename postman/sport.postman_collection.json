@@ -1,0 +1,852 @@
+{
+	"info": {
+		"_postman_id": "b00f8975-89fd-4b5a-92e6-6fbf3dbb37a3",
+		"name": "sport",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19470314"
+	},
+	"item": [
+		{
+			"name": "Center",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Center sport\",\n    \"street\": \"rue du chateaux\",\n    \"city\": \"Versailles\",\n    \"postalCode\": 78000, \n    \"country\" : \"France\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/center-sport",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"center-sport"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "sport",
+									"disabled": true
+								},
+								{
+									"key": "street",
+									"value": "esgi center",
+									"disabled": true
+								},
+								{
+									"key": "city",
+									"value": "Paris",
+									"disabled": true
+								},
+								{
+									"key": "postalCode",
+									"value": "72000",
+									"disabled": true
+								},
+								{
+									"key": "country",
+									"value": "France",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "centerSportId",
+									"value": "e4af5a59-50fd-4903-ab81-1e61cff1cf66",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/center-sport?centerSportId=e4af5a59-50fd-4903-ab81-1e61cff1cf66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"center-sport"
+							],
+							"query": [
+								{
+									"key": "centerSportId",
+									"value": "e4af5a59-50fd-4903-ab81-1e61cff1cf66"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "userId",
+									"value": "e4af5a59-50fd-4903-ab81-1e61cff1cf66",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/user?userId=f7e421da-518c-49f8-9920-1e9ad0c894b2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "f7e421da-518c-49f8-9920-1e9ad0c894b2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"aristide\",\n    \"lastName\": \"fumo\",\n    \"email\" : \"aristide.ff@gmail.com\",\n    \"phoneNumber\" : \"0660406161\",\n    \"street\": \"rue du changement\",\n    \"city\": \"Versailles\",\n    \"postalCode\": \"78000\",\n    \"country\": \"France\",\n    \"money\": 20000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Money",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":  \"f7e421da-518c-49f8-9920-1e9ad0c894b2\",\n    \"money\": 2000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/update-money",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"update-money"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "enterprise",
+			"item": [
+				{
+					"name": "createEnterprise",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "Hubert"
+						},
+						"url": {
+							"raw": "http://localhost:8080/enterprise",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"enterprise"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "hubert",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/enterprise/add-users?enterpriseId=e08d3487-879d-4821-8bfc-bccca83bcbb1&userId=f7e421da-518c-49f8-9920-1e9ad0c894b2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"enterprise",
+								"add-users"
+							],
+							"query": [
+								{
+									"key": "enterpriseId",
+									"value": "e08d3487-879d-4821-8bfc-bccca83bcbb1"
+								},
+								{
+									"key": "userId",
+									"value": "f7e421da-518c-49f8-9920-1e9ad0c894b2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/enterprise/remove-users?enterpriseId=e08d3487-879d-4821-8bfc-bccca83bcbb1&userId=f7e421da-518c-49f8-9920-1e9ad0c894b2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"enterprise",
+								"remove-users"
+							],
+							"query": [
+								{
+									"key": "enterpriseId",
+									"value": "e08d3487-879d-4821-8bfc-bccca83bcbb1"
+								},
+								{
+									"key": "userId",
+									"value": "f7e421da-518c-49f8-9920-1e9ad0c894b2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list Enterprise",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/enterprise?id=e08d3487-879d-4821-8bfc-bccca83bcbb1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"enterprise"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "e08d3487-879d-4821-8bfc-bccca83bcbb1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "room",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Hello morning\",\n    \"centerSportId\": \"e4af5a59-50fd-4903-ab81-1e61cff1cf66\",\n    \"price\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/room",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"room"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/room?roomId=e4af5a59-50fd-4903-ab81-1e61cff1cf66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"room"
+							],
+							"query": [
+								{
+									"key": "roomId",
+									"value": "e4af5a59-50fd-4903-ab81-1e61cff1cf66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "centersport",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/room/by-center-sport?centerSportId=e4af5a59-50fd-4903-ab81-1e61cff1cf66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"room",
+								"by-center-sport"
+							],
+							"query": [
+								{
+									"key": "centerSportId",
+									"value": "e4af5a59-50fd-4903-ab81-1e61cff1cf66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update price",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/room/update-price?roomId=e52f0180-db17-4e72-a6c3-0f5b5d839aa1&price=100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"room",
+								"update-price"
+							],
+							"query": [
+								{
+									"key": "roomId",
+									"value": "e52f0180-db17-4e72-a6c3-0f5b5d839aa1"
+								},
+								{
+									"key": "price",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Material",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"vélo\",\n    \"quantity\": 1,\n    \"caution\": 200\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/material",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"material"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/material?materialId=aedc717a-a34d-44e4-a2d5-44ffb93b9108",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"material"
+							],
+							"query": [
+								{
+									"key": "materialId",
+									"value": "aedc717a-a34d-44e4-a2d5-44ffb93b9108"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "distribute",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/material/distribute?materialId=aedc717a-a34d-44e4-a2d5-44ffb93b9108&centerSportId=e4af5a59-50fd-4903-ab81-1e61cff1cf66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"material",
+								"distribute"
+							],
+							"query": [
+								{
+									"key": "materialId",
+									"value": "aedc717a-a34d-44e4-a2d5-44ffb93b9108"
+								},
+								{
+									"key": "centerSportId",
+									"value": "e4af5a59-50fd-4903-ab81-1e61cff1cf66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "maintenance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/material/maintenance?materialId=aedc717a-a34d-44e4-a2d5-44ffb93b9108",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"material",
+								"maintenance"
+							],
+							"query": [
+								{
+									"key": "materialId",
+									"value": "aedc717a-a34d-44e4-a2d5-44ffb93b9108"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "prestation",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"bouteille\",\n    \"price\": 100,\n    \"description\": \"hello\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/prestation?centerSportId=e4af5a59-50fd-4903-ab81-1e61cff1cf66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"prestation"
+							],
+							"query": [
+								{
+									"key": "centerSportId",
+									"value": "e4af5a59-50fd-4903-ab81-1e61cff1cf66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/prestation?prestationId=3001f9c4-eef9-4888-99a5-63bb4e4ac0a8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"prestation"
+							],
+							"query": [
+								{
+									"key": "prestationId",
+									"value": "3001f9c4-eef9-4888-99a5-63bb4e4ac0a8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get center-sport",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/prestation/by-center-sport?centerSportId=e4af5a59-50fd-4903-ab81-1e61cff1cf66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"prestation",
+								"by-center-sport"
+							],
+							"query": [
+								{
+									"key": "centerSportId",
+									"value": "e4af5a59-50fd-4903-ab81-1e61cff1cf66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/prestation/update?prestationId=3001f9c4-eef9-4888-99a5-63bb4e4ac0a8&newPrice=100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"prestation",
+								"update"
+							],
+							"query": [
+								{
+									"key": "prestationId",
+									"value": "3001f9c4-eef9-4888-99a5-63bb4e4ac0a8"
+								},
+								{
+									"key": "newPrice",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "session",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"hello2\",\n    \"centerSportId\": \"e4af5a59-50fd-4903-ab81-1e61cff1cf66\",\n    \"description\": \"coach\", \n    \"prestation\": \"3001f9c4-eef9-4888-99a5-63bb4e4ac0a8\",\n    \"material\": \"aedc717a-a34d-44e4-a2d5-44ffb93b9108\",\n    \"startDate\": \"2024-03-10T14:00:00\",\n    \"endDate\": \"2024-03-10T15:00:00\",\n    \"maxParticipants\": 10,\n    \"minParticipants\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/session",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"session"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "by center sport",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/session/by-center-sport?centerSportId=e4af5a59-50fd-4903-ab81-1e61cff1cf66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"session",
+								"by-center-sport"
+							],
+							"query": [
+								{
+									"key": "centerSportId",
+									"value": "e4af5a59-50fd-4903-ab81-1e61cff1cf66"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/session?sessionId=caaa35bd-14d3-4411-95a9-2627a4751620",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"session"
+							],
+							"query": [
+								{
+									"key": "sessionId",
+									"value": "caaa35bd-14d3-4411-95a9-2627a4751620"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "join",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/session/join?sessionId=caaa35bd-14d3-4411-95a9-2627a4751622&userId=f7e421da-518c-49f8-9920-1e9ad0c894b0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"session",
+								"join"
+							],
+							"query": [
+								{
+									"key": "sessionId",
+									"value": "caaa35bd-14d3-4411-95a9-2627a4751622"
+								},
+								{
+									"key": "userId",
+									"value": "f7e421da-518c-49f8-9920-1e9ad0c894b0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unjoin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/session/unjoin?sessionId=caaa35bd-14d3-4411-95a9-2627a4751620&userId=f7e421da-518c-49f8-9920-1e9ad0c894b2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"session",
+								"unjoin"
+							],
+							"query": [
+								{
+									"key": "sessionId",
+									"value": "caaa35bd-14d3-4411-95a9-2627a4751620"
+								},
+								{
+									"key": "userId",
+									"value": "f7e421da-518c-49f8-9920-1e9ad0c894b2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "caution",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/session/caution?sessionId=caaa35bd-14d3-4411-95a9-2627a4751620&userId=f7e421da-518c-49f8-9920-1e9ad0c894b2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"session",
+								"caution"
+							],
+							"query": [
+								{
+									"key": "sessionId",
+									"value": "caaa35bd-14d3-4411-95a9-2627a4751620"
+								},
+								{
+									"key": "userId",
+									"value": "f7e421da-518c-49f8-9920-1e9ad0c894b2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

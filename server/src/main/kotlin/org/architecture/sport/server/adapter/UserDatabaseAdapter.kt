@@ -33,4 +33,8 @@ class UserDatabaseAdapter(
     override fun findById(id: UUID): User? {
         return userRepository.findById(id).getOrNull()?.let { userEntityMapper.toDomain(it) }
     }
+
+    override fun findAll(): List<User> {
+        return  userRepository.findAll().stream().map { userEntityMapper.toDomain(it) }.toList()
+    }
 }

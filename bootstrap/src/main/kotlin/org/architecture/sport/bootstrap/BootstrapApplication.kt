@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @ComponentScan(basePackages = ["org.architecture.sport"])
-@EnableMongoRepositories(basePackages = ["org.architecture.sport"])
+@EnableMongoRepositories(basePackages = ["org.architecture.sport"], )
 class BootstrapApplication
 
 fun main(args: Array<String>) {

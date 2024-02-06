@@ -7,6 +7,7 @@ import org.architecture.sport.domain.model.Address
 import org.architecture.sport.domain.model.User
 import org.architecture.sport.domain.model.UserMoney
 import org.springframework.stereotype.Service
+import kotlin.math.min
 
 @Service
 class UserValidation {
@@ -18,17 +19,17 @@ class UserValidation {
                 pattern("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$")
             }
             User::firstName required {
-                pattern("^[a-zA-Z]+\$")
                 minLength(2)
                 maxLength(100)
             }
             User::lastName required {
-                pattern("^[a-zA-Z]+\$")
                 minLength(2)
                 maxLength(100)
             }
             User::phoneNumber required {
-                pattern("^[0-9]{10}\$")
+                pattern("^[0-9]*\$")
+                minLength(2)
+                maxLength(100)
             }
 
             User::money required {
@@ -37,21 +38,19 @@ class UserValidation {
             }
             User::address required {
                 Address::street required {
-                    pattern("^[a-zA-Z0-9 ]+\$")
                     minLength(2)
                     maxLength(100)
                 }
                 Address::city required {
-                    pattern("^[a-zA-Z]+\$")
                     minLength(2)
                     maxLength(100)
                 }
                 Address::postalCode required {
-                    pattern("^[0-9]{5}\$")
+                    minLength(2)
+                    maxLength(100)
                 }
 
                 Address::country required {
-                    pattern("^[a-zA-Z]+\$")
                     minLength(2)
                     maxLength(100)
                 }

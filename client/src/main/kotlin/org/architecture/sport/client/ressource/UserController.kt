@@ -3,11 +3,11 @@ package org.architecture.sport.client.ressource
 import org.architecture.sport.client.dto.UserCreateDto
 import org.architecture.sport.client.dto.UserMoneyDto
 import org.architecture.sport.client.mapping.UserMapper
+import org.architecture.sport.client.utils.tryCatchUUID
 import org.architecture.sport.domain.ports.client.UserApi
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import java.util.*
 
 
 @RestController
@@ -20,7 +20,7 @@ class UserController(
 
     @PostMapping
     fun createUser(
-        userCreateDto: UserCreateDto,
+        @RequestBody(required = true) userCreateDto: UserCreateDto,
     ): ResponseEntity<Any> {
         return userApi.create(
             user = userMapper.toUserCreateDTOtoUser(userCreateDto)
@@ -36,9 +36,9 @@ class UserController(
     }
 
 
-    @PostMapping
+    @PostMapping("/update-money")
     fun updateMoneyUser(
-        userMoneyDto: UserMoneyDto,
+        @RequestBody userMoneyDto: UserMoneyDto,
     ): ResponseEntity<Any> {
         return userApi.updateMoney(
             userMoney = userMapper.toDomain(userMoneyDto)
@@ -51,6 +51,19 @@ class UserController(
                     ResponseEntity.ok(user)
                 }
             )
+    }
+
+    @GetMapping
+    fun getUser(
+        @RequestParam(required = false) userId: String?,
+    ): ResponseEntity<Any> {
+        if (userId != null){
+            tryCatchUUID(userId) ?: return ResponseEntity.badRequest().body("Invalid UUID")
+        }
+        val user =  userApi.getUsers(
+            id = userId?.let { UUID.fromString(userId)}
+        )
+        return ResponseEntity.ok(user.getOrNull())
     }
 
 }
